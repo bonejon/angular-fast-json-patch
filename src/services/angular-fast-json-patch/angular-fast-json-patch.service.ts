@@ -1,9 +1,9 @@
-import { observable } from 'rxjs/symbol/observable';
 import { Injectable } from '@angular/core';
 import { Helpers } from './helpers';
 import { Operation, Operations } from './operation';
 import { Observer } from './observer';
 import { Mirror } from './mirror';
+import { ObserverInfo } from './observerinfo';
 
 /**
  * FastJsonPatchService class.
