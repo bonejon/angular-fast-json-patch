@@ -1,6 +1,6 @@
 {
   "name": "angular-fast-json-patch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Angular Fast Json Patch",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
