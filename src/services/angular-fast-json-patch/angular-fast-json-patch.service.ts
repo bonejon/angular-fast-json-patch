@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Helpers } from './helpers';
 import { Operation, Operations } from './operation';
 import { Observer } from './observer';
+import { Mirror } from './mirror';
 
 /**
  * FastJsonPatchService class.
@@ -153,27 +154,5 @@ export class FastJsonPatchService {
   private removeObserverFromMirror(mirror: Mirror, observer: any): any {
     const observerIndex: number = mirror.observers.indexOf(observer);
     mirror.observers.splice(observerIndex, 1);
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-class Mirror {
-  public originalObject: any;
-  public obj: any;
-  public observers: ObserverInfo[] = new Array<ObserverInfo>();
-
-  constructor(obj: any) {
-    this.obj = obj;
-  }
-}
-
-// tslint:disable-next-line:max-classes-per-file
-class ObserverInfo {
-  public callback: any;
-  public observer: any;
-
-  constructor(callback: any, observer: any) {
-    this.callback = callback;
-    this.observer = observer;
   }
 }

@@ -10,21 +10,6 @@ describe('FastJsonPatchService', () => {
     fastJsonPatchService = new FastJsonPatchService();
   });
 
-  // it('should return observable with time string', (done) => {
-  //   const timeStringFormat = /[0-9]{2}:[0-9]{2}:[0-9]{2}/i;
-
-  //   tickTockService.getTick().subscribe(
-  //     (timeString) => {
-  //       expect(timeStringFormat.test(timeString)).toBeTruthy(
-  //         'Time string should have hh:mm:ss format'
-  //       );
-
-  //       // Stop asynchronous test.
-  //       done();
-  //     }
-  //   );
-  // });
-
   it ('should construct the service', (done) => {
     expect(fastJsonPatchService).toBeDefined();
 
