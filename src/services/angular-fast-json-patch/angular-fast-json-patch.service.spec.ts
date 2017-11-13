@@ -174,4 +174,16 @@ describe('FastJsonPatchService', () => {
 
     done();
   });
+
+  it ('Should generate a delta between two supplied objects', (done) => {
+    const version1: any = { id: 1, name: 'name property', favouriteColour: 'Yellow' };
+    const version2: any = { id: 1, name: 'Fred Bloggs', favouriteColour: 'Blue' };
+
+    const vector = fastJsonPatchService.compare<any>(version1, version2);
+
+    expect(vector).toBeDefined();
+    expect(vector.length).toBe(2);
+
+    done();
+  });
 });

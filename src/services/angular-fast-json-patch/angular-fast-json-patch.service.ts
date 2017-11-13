@@ -25,22 +25,27 @@ export class FastJsonPatchService {
       }
     }
 
-    Helpers.generate(mirror.originalObject, observer.object, observer.patches, '');
+    if (mirror) {
+      Helpers.generate(mirror.originalObject, observer.object, observer.patches, '');
 
-    if (observer.patches.length) {
-      Helpers.applyPatch(mirror.obj, observer.patches);
-    }
-
-    const temp = observer.patches;
-
-    if (temp.length > 0) {
-      observer.patches = [];
-      if (observer.callback) {
-        observer.callback(temp);
+      if (observer.patches.length) {
+        Helpers.applyPatch(mirror.obj, observer.patches);
       }
+
+      const temp = observer.patches;
+
+      if (temp.length > 0) {
+        observer.patches = [];
+        if (observer.callback) {
+          observer.callback(temp);
+        }
+      }
+
+      return temp;
+    } else {
+      throw new Error('Mirror not found');
     }
-    return temp;
-    }
+  }
 
   public observe<T>(obj: any, callback?: (patches: Operation[]) => void): Observer<T> {
     let observer: Observer<T>;
@@ -129,6 +134,12 @@ export class FastJsonPatchService {
     mirror.observers.push(new ObserverInfo(callback, observer));
 
     return observer;
+  }
+
+  public compare<T>(source: T, target: T): Operation[] {
+    const patches: Operation[] = [];
+    Helpers.generate(source, target, patches, '');
+    return patches;
   }
 
   public unobserve<T>(observer: Observer<T>) {
