@@ -1,5 +1,5 @@
 import { Operations, Operation } from './operation';
-import { OperationResult } from './OperationResult';
+import { OperationResult } from './operationresult';
 import { JsonPatchError } from './json-patch-error';
 import { arrOps, objOps } from './operation-extensions';
 import { PatchResult } from './patchresult';
@@ -7,6 +7,7 @@ import { areEquals } from './deep-equals';
 import { Validator } from './validator';
 
 export class Helpers {
+
  /**
   * Deeply clone the object.
   * https://jsperf.com/deep-copy-vs-json-stringify-json-parse/25 (recursiveDeepCopy)
