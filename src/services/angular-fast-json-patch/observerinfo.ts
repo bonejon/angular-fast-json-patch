@@ -3,11 +3,11 @@ export class ObserverInfo {
   private _observer: any;
 
   public get callback(): any {
-    return this.callback;
+    return this._callback;
   }
 
   public get observer(): any {
-    return this.observer;
+    return this._observer;
   }
 
   constructor(callback: any, observer: any) {
