@@ -23,3 +23,6 @@ coverage/
 dist
 docs
 tmp
+
+# packaged files
+angular-fast-json-patch*.tgz
