@@ -26,3 +26,20 @@ tmp
 
 # Library files
 src/
+
+# config
+.editorconfig
+.npmignore
+.travis.yml
+
+# internal files
+*.tgz
+gulpfile.js
+karma-test-entry.ts
+karma.conf.ts
+tsconfig-aot.json
+tsconfig.json
+tslint.json
+webpack-test.config.ts
+webpack-umd.config.ts
+yarn.lock
