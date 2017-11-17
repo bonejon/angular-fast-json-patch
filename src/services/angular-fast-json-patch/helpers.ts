@@ -109,8 +109,6 @@ export class Helpers {
       }
       /* END ROOT OPERATIONS */
     } else {
-      debugger;
-
       if (!mutateDocument) {
         document = Helpers.deepClone(document);
       }
