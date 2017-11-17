@@ -16,7 +16,7 @@ export class FastJsonPatchService {
    * Generate an array of patches from an observer
    */
   public generate<T>(observer: Observer<T>): Operation[] {
-    const mirror: Mirror = this.beforeObjects.find((o: Mirror) => o.obj === observer.object);
+    const mirror: Mirror = this.getMirror(observer.object);
 
     if (mirror) {
       Helpers.generate(mirror.originalObject, observer.object, observer.patches, '');
