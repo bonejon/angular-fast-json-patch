@@ -57,7 +57,7 @@ describe('FastJsonPatchService', () => {
     done();
   });
 
-  fit ('Should generate a patch and fields other than the one that changed should not be affected', (done) => {
+  it ('Should generate a patch and fields other than the one that changed should not be affected', (done) => {
     const object: any = { id: 1, name: 'the name', dontChangeMe: 'This should not change' };
 
     const observer: Observer<any> = fastJsonPatchService.observe(object);
