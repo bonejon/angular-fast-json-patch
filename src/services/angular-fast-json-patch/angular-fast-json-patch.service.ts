@@ -16,20 +16,13 @@ export class FastJsonPatchService {
    * Generate an array of patches from an observer
    */
   public generate<T>(observer: Observer<T>): Operation[] {
-    let mirror: Mirror;
-
-    for (let i = 0, length = this.beforeObjects.length; i < length; i++) {
-      if (this.beforeObjects[i].obj === observer.object) {
-        mirror = this.beforeObjects[i];
-        break;
-      }
-    }
+    const mirror: Mirror = this.beforeObjects.find((o: Mirror) => o.obj === observer.object);
 
     if (mirror) {
       Helpers.generate(mirror.originalObject, observer.object, observer.patches, '');
 
       if (observer.patches.length) {
-        Helpers.applyPatch(mirror.obj, observer.patches);
+        Helpers.applyPatch(mirror.originalObject, observer.patches);
       }
 
       const temp = observer.patches;

@@ -11,8 +11,9 @@ import { areEquals } from './deep-equals';
 
 /* The operations applicable to an object */
 export const objOps = {
+  this: this,
   add: (obj: any, key: any, document: any) => {
-    obj[key] = this.value;
+    obj[key] = objOps.this.value;
     return { newDocument: document };
   },
   remove: (obj: any, key: any, document: any) => {
@@ -22,53 +23,54 @@ export const objOps = {
   },
   replace: (obj: any, key: any, document: any) => {
     const removed = obj[key];
-    obj[key] = this.value;
+    obj[key] = objOps.this.value;
     return { newDocument: document, removed };
   },
   move: (obj: any, key: any, document: any) => {
     /* in case move target overwrites an existing value,
     return the removed value, this can be taxing performance-wise,
     and is potentially unneeded */
-    let removed = Helpers.getValueByPointer(document, this.path);
+    let removed = Helpers.getValueByPointer(document, objOps.this.path);
 
     if (removed) {
       removed = Helpers.deepClone(removed);
     }
 
-    const removeOperation = new Operation(Operations.Remove, this.from);
+    const removeOperation = new Operation(Operations.Remove, objOps.this.from);
     const originalValue = Helpers.applyOperation(document,
       removeOperation
     ).removed;
 
-    const addOperation = new Operation(Operations.Add, this.path, originalValue);
+    const addOperation = new Operation(Operations.Add, objOps.this.path, originalValue);
     Helpers.applyOperation(document, addOperation);
 
     return { newDocument: document, removed };
   },
   copy: (obj: any, key: any, document: any) => {
-    const valueToCopy = Helpers.getValueByPointer(document, this.from);
+    const valueToCopy = Helpers.getValueByPointer(document, objOps.this.from);
     // enforce copy by value so further operations don't affect source (see issue #177)
 
-    const addOperation = new Operation(Operations.Add, this.path, Helpers.deepClone(valueToCopy));
+    const addOperation = new Operation(Operations.Add, objOps.this.path, Helpers.deepClone(valueToCopy));
     Helpers.applyOperation(document, addOperation);
     return { newDocument: document };
   },
   test: (obj: any, key: any, document: any) => {
-    return { newDocument: document, test: areEquals(obj[key], this.value) };
+    return { newDocument: document, test: areEquals(obj[key], objOps.this.value) };
   },
   _get: (obj: any, key: any, document: any) => {
-    this.value = obj[key];
+    objOps.this.value = obj[key];
     return { newDocument: document };
   }
 };
 
 /* The operations applicable to an array. Many are the same as for the object */
 export const arrOps = {
+  this: this,
   add: (arr: any, i: any, document: any) => {
     if (Helpers.isInteger(i)) {
-      arr.splice(i, 0, this.value);
+      arr.splice(i, 0, arrOps.this.value);
     } else { // array props
-      arr[i] = this.value;
+      arr[i] = arrOps.this.value;
     }
     // this may be needed when using '-' in an array
     return { newDocument: document, index: i };
@@ -79,7 +81,7 @@ export const arrOps = {
   },
   replace: (arr: any, i: any, document: any) => {
     const removed = arr[i];
-    arr[i] = this.value;
+    arr[i] = arrOps.this.value;
     return { newDocument: document, removed };
   },
   move: objOps.move,

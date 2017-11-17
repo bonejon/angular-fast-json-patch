@@ -1,3 +1,4 @@
+import * as console from 'console';
 import { Operations, Operation } from './operation';
 import { OperationResult } from './operationresult';
 import { JsonPatchError } from './json-patch-error';
@@ -108,6 +109,8 @@ export class Helpers {
       }
       /* END ROOT OPERATIONS */
     } else {
+      debugger;
+
       if (!mutateDocument) {
         document = Helpers.deepClone(document);
       }
@@ -164,7 +167,7 @@ export class Helpers {
               throw new JsonPatchError('The specified index MUST NOT be greater than the number of elements in the array', 'OPERATION_VALUE_OUT_OF_BOUNDS', 0, operation.path, operation);
             }
 
-            const returnValue = (arrOps as any)[operation.op].call(operation, obj, key, document); // Apply patch
+            const returnValue = arrOps[operation.op].call(operation, obj, key, document); // Apply patch
             if (returnValue.test === false) {
               throw new JsonPatchError('Test operation failed', 'TEST_OPERATION_FAILED', 0, operation, document);
             }
@@ -177,7 +180,7 @@ export class Helpers {
           }
 
           if (t >= len) {
-            const returnValue = (objOps as any)[operation.op].call(operation, obj, key, document); // Apply patch
+            const returnValue = objOps[operation.op].call(operation, obj, key, document); // Apply patch
             if (returnValue.test === false) {
               throw new JsonPatchError('Test operation failed', 'TEST_OPERATION_FAILED', 0, operation, document);
             }
