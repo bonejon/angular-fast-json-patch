@@ -10,7 +10,7 @@ import { areEquals } from './deep-equals';
  */
 
 /* The operations applicable to an object */
-export const objOps = {
+export const objOps: any = {
   this: this,
   add: (obj: any, key: any, document: any) => {
     obj[key] = objOps.this.value;
@@ -64,7 +64,7 @@ export const objOps = {
 };
 
 /* The operations applicable to an array. Many are the same as for the object */
-export const arrOps = {
+export const arrOps: any = {
   this: this,
   add: (arr: any, i: any, document: any) => {
     if (Helpers.isInteger(i)) {
