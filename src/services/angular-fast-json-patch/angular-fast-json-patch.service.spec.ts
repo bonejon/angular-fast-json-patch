@@ -57,6 +57,32 @@ describe('FastJsonPatchService', () => {
     done();
   });
 
+  it ('Should generate a patch and fields other than the one that changed should not be affected', (done) => {
+    const object: any = { id: 1, name: 'the name', dontChangeMe: 'This should not change' };
+
+    const observer: Observer<any> = fastJsonPatchService.observe(object);
+
+    object.name = 'An Updated Name';
+
+    const vector: Operation[] = fastJsonPatchService.generate(observer);
+
+    expect(vector).toBeDefined();
+    expect(vector.length).toBe(1);
+
+    const op: Operation = vector[0];
+    expect(op.op).toBe('replace');
+    expect(op.path).toBe('/name');
+    expect(op.value).toBe('An Updated Name');
+
+    expect(object.name).toBeDefined();
+    expect(object.name).toBe('An Updated Name');
+
+    expect(object.dontChangeMe).toBeDefined();
+    expect(object.dontChangeMe).toBe('This should not change');
+
+    done();
+  });
+
   it ('Should generate a patch with a single add operation for a simple update', (done) => {
     const object: any = { id: 1, name: 'the name' };
 
